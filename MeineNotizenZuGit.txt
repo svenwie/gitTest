@@ -1,0 +1,101 @@
+﻿Die drei Stages von Git: Modified, Staging, Committed
+
+ 1. In den Ordner gehen der gegitted werden soll.
+ 2. Dort git init ausführen. Ordner wird nun gegitted (von git überwacht).
+ 3. Veränderungen machen die man möchte.
+ 4. Über git status kann man den Status der Daten abfragen.++++++++++++++++++++
+ 5. Mit git add dateiname kann man die Änderungen einchecken.++++++++++++++++++
+ 6. Mit git rm dateiname kann man das Einchecken rückgängig machen.
+ 7. Mit git add . kann man ALLE Dateien im aktuellen Ordner in die Staging Area heben.
+ 8. git commit -m "Kommentar was gemacht wurde" um den commit auszuführen.
+   |-> das -m flag bedeutet das man eine Massage an den commit anhängt.
+   |-> alle Dateien die vorher in der Staging waren sind nun committed.
+ 9. Anzeigen aller Durchgeführten commits mittels git log
+10. Für Kompakte Anzeige des Log git log --oneline
+
+
+
+Checkout commit, Revert commit, Reset commit
+
+Checkout commit: Zeigt einen commit zu einem bestimmten Zeitpunkt.
+Revert commit: Entfernt einen commit.
+Reset commit: Versetzt einen in der commitZeit zurück. Alles danach wird gelöscht.
+
+ git checkout hierDerIdentifierAusDemLog
+ |-> dadurch kehrt man zu dem Zustand der Datei zurück die man ausgewählt hat.
+
+ git checkout master
+ |-> dadurch kehrt man an den letzten commit des master Branch zurück
+
+ git revert hierDerIdentifierAusDemLog
+ |-> dadurch wird die ausgewählte Datei revertet. Also nicht gelöscht sondern mit
+     mit einem flag versehen das sagt das man die datei reverted hat.
+     Muss im aufpoppenden Editor mit qw bestätigt werden.
+
+ git reset hierDerIdentifierAusDemLog
+ |-> dadurch wird jeder commit nach diesem Identifier gelöscht. Sollte man sie noch auf dem
+     Rechner haben bleiben sie erhalten aber in git sind sie final weg.
+ https://www.youtube.com/watch?v=RIYrfkZjWmA&index=7&list=PL4cUxeGkcC9goXbgTDQ0n_4TBzOO0ocPR
+
+
+Branching
+
+Neuer Branch anlegen:
+  git branch NeuerBranchName wenn man sich im zu branchenden ordner befindet
+    um einen neuen Branch mit dem gewünschten Namen zu erzeugen.
+Branches anzeigen:
+  git branch -a um anzuzeigen welche Branches es gibt.
+Branch wechseln:
+  git checkout BranchName um in den gewünschten Branch zu kommen.
+Branch löschen:
+  git branch -d ZuLöschenderBranch
+  |-> -d bedeutet einfach nur delete
+Neuen Branch erzeugen und in ihn hineinwechseln(weils schneller ist):
+  git checkout -b NeuerBranchName
+
+Merging
+
+Zum mergen
+  git merge ZuMergenderBranch darurch wird der zu mergende Branch in den Master Branches
+    hinzugefügt.
+
+
+Github
+
+  Dient zur Zentralen verwaltung des erstellten inhalts. Dort können die an verschiedenen   Orten erzeugten Daten abgeglichen werden. Mittels eines PUSH können Daten dort zentral
+  abgelegt werden und wenn die anderen Entwickler damit einverstanden sind können sie sich
+  diese Daten auf ihre lokalen Geräte ziehen PULL.
+  Doch erstmal der Ablauf. Geh auf Github und richte alles ein bis du so eine
+  adresse bekommst: https://github.com/svenwie/git-one.git
+  Dort steht das es bei github ist, dann der Nutzername und der Ordner in dem das landet
+  was du hochladen möchtest.
+Zum Hochladen
+  Im Cmder: git push https://github.com/svenwie/git-one.git master
+                                                            |-> das ist dann der Branch
+Verwenden des Alias
+  Um sich das kopieren der Adresse zu sparen kann man ein Alias dafür verwenden.
+  git remote add origin https://github.com/svenwie/git-one.git
+                 |-> origin ist dann das Alias. Wird häufig von Entwicklern verwendet.
+
+Zum Runterladen von Inhalten
+  Bevor man ein Repository bei Github herunterläd ist es sinnvoll auf dem eigenen Rechner
+  einen Ordner anzulegen in den man das Repo clonen möchte. Dann in den Ordner wechseln.
+    git clone AdresseDesRepoAufGit
+
+Unterschied Fetch und Pull
+  git fetch origin lädt nur neue Daten herunter aber integriert diese nicht.
+  git pull origin master hingegen lädt nicht nur neue Daten herunter sondern
+    integriert diese auch sofort. git pull sollte also nur mit einer sauber arbeitenden
+    Kopie durchgeführt werden, da es sonst zu merge Konflikten kommen kann.
+
+Zum Hochladen von Inhalten
+  git remote -v zeigt uns nun welche möglichkeiten wir für die Inhalte haben.
+  für gewöhnlich ist das fetch und push.
+  git push origin master
+           |-> hinter origin verbirgt sich die Adresse
+                  |-> und master ist dann der Branch
+
+  Besser ist jedoch es so hochzuladen das man es bei gefallen integriert oder einfach verändert.
+  git push origin BranchDerHochgeladenWerdenSoll
+                  |-> auf diese Weise wird sichergestellt das es nicht im Master Branch landet.
+  Jetzt kann man auf Github Compare & pull request durchführen. Es können auch noch Kommentare eingefügt werden.
